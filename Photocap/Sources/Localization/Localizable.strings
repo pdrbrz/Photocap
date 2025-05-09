@@ -1,0 +1,29 @@
+// MARK: - Localization Setup
+
+// UI Elements
+"capture_photo_button" = "Capture Photo";
+"pick_frame_button" = "Pick Frame from Video";
+"photo_captured_prompt" = "Photo captured. Now record video:";
+"save_frame_button" = "Save Frame";
+"save_photo_button" = "Save Photo";
+"start_recording_button" = "Start Recording";
+"stop_recording_button" = "Stop Recording";
+
+// Error Messages
+"cannot_add_movie_output_error" = "Cannot add movie output.";
+"cannot_add_photo_output_error" = "Cannot add photo output.";
+"failed_to_add_camera_input_error" = "Failed to add camera input: %@";
+"failed_to_clear_temp_error" = "Failed to clear temp file: %@";
+"failed_to_generate_frame_error" = "Failed to generate frame: %@";
+"failed_to_start_session_error" = "Failed to start capture session.";
+"failed_to_stop_session_error" = "Failed to stop capture session.";
+"no_frame_to_save_error" = "No frame to save.";
+"no_frame_to_select_error" = "No frame to select.";
+"no_front_camera_error" = "No front camera available.";
+"no_photo_to_save_error" = "No photo to save.";
+"photo_capture_error" = "Photo capture error: %@";
+"unable_to_process_photo_data_error" = "Unable to process captured photo data.";
+"video_recording_error" = "Video recording error: %@";
+
+// Success Messages
+"image_saved_message" = "Image saved to Photos.";

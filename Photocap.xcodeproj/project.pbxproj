@@ -14,6 +14,8 @@
 		B458AF322DCE51CA00CA8778 /* PhotocapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B458AF312DCE51CA00CA8778 /* PhotocapTests.swift */; };
 		B458AF3C2DCE51CA00CA8778 /* PhotocapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B458AF3B2DCE51CA00CA8778 /* PhotocapUITests.swift */; };
 		B458AF3E2DCE51CA00CA8778 /* PhotocapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B458AF3D2DCE51CA00CA8778 /* PhotocapUITestsLaunchTests.swift */; };
+		B4FD7A612DCE942900E7FA40 /* CaptureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A602DCE942900E7FA40 /* CaptureManager.swift */; };
+		B4FD7A642DCE955500E7FA40 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B4FD7A632DCE955500E7FA40 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		B458AF372DCE51CA00CA8778 /* PhotocapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotocapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B458AF3B2DCE51CA00CA8778 /* PhotocapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotocapUITests.swift; sourceTree = "<group>"; };
 		B458AF3D2DCE51CA00CA8778 /* PhotocapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotocapUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		B4FD7A602DCE942900E7FA40 /* CaptureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureManager.swift; sourceTree = "<group>"; };
+		B4FD7A632DCE955500E7FA40 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +98,7 @@
 		B458AF1F2DCE51C900CA8778 /* Photocap */ = {
 			isa = PBXGroup;
 			children = (
+				B4FD7A5E2DCE940200E7FA40 /* Sources */,
 				B458AF202DCE51C900CA8778 /* PhotocapApp.swift */,
 				B458AF222DCE51C900CA8778 /* ContentView.swift */,
 				B458AF242DCE51CA00CA8778 /* Assets.xcassets */,
@@ -125,6 +130,31 @@
 				B458AF3D2DCE51CA00CA8778 /* PhotocapUITestsLaunchTests.swift */,
 			);
 			path = PhotocapUITests;
+			sourceTree = "<group>";
+		};
+		B4FD7A5E2DCE940200E7FA40 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				B4FD7A622DCE952500E7FA40 /* Localization */,
+				B4FD7A5F2DCE940C00E7FA40 /* Managers */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		B4FD7A5F2DCE940C00E7FA40 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				B4FD7A602DCE942900E7FA40 /* CaptureManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		B4FD7A622DCE952500E7FA40 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				B4FD7A632DCE955500E7FA40 /* Localizable.strings */,
+			);
+			path = Localization;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B458AF282DCE51CA00CA8778 /* Preview Assets.xcassets in Resources */,
+				B4FD7A642DCE955500E7FA40 /* Localizable.strings in Resources */,
 				B458AF252DCE51CA00CA8778 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,6 +290,7 @@
 			files = (
 				B458AF232DCE51C900CA8778 /* ContentView.swift in Sources */,
 				B458AF212DCE51C900CA8778 /* PhotocapApp.swift in Sources */,
+				B4FD7A612DCE942900E7FA40 /* CaptureManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +379,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -404,7 +436,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -425,6 +457,8 @@
 				DEVELOPMENT_TEAM = 7J7X7MSP86;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to capture photos and video frames.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires photo library access to save captured images.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -454,6 +488,8 @@
 				DEVELOPMENT_TEAM = 7J7X7MSP86;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to capture photos and video frames.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires photo library access to save captured images.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
