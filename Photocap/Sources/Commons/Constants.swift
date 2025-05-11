@@ -16,6 +16,7 @@ enum Constants {
         static let medium: CGFloat = 16
         static let large: CGFloat = 24
         static let extraLarge: CGFloat = 28
+        static let xExtraLarge: CGFloat = 32
         static let huge: CGFloat = 80
         static let toastTop: CGFloat = 50
     }
@@ -35,6 +36,7 @@ enum Constants {
     }
 
     enum CornerRadius {
+        static let small: CGFloat = 8
         static let toast: CGFloat = 10
     }
 

@@ -23,8 +23,9 @@ struct ContentView: View {
             Color.black
                 .ignoresSafeArea()
             // I would like to separate this UI components into other files
+            // (like a proper ViewController, etc)
             // but I'l keep them here for the sake of simplicity,
-            // to don't take much longer than the requested time for the assessment
+            // and to don't take much longer than the requested time for the assessment
             if let img = viewModel.capturedImage,
                let vidURL = viewModel.videoURL
             {
@@ -36,10 +37,9 @@ struct ContentView: View {
 
                         Image(uiImage: img)
                             .resizable()
-                            .scaledToFit()
+                            .scaledToFill()
                             .frame(maxWidth: .infinity,
                                    maxHeight: .infinity)
-                            .clipped()
 
                         Text(LocalizedStringKey("swipe_instruction"))
                             .foregroundColor(.white)
@@ -53,6 +53,7 @@ struct ContentView: View {
                     }
                     .tag(0)
                     .ignoresSafeArea(edges: .top)
+                    .clipShape(.rect(cornerRadius: Constants.CornerRadius.small, style: .circular))
 
                     // MARK: Video Page
 
@@ -75,10 +76,11 @@ struct ContentView: View {
                                action: viewModel.saveFrame)
                             .buttonStyle(.borderedProminent)
                             .tint(.red)
-                            .padding(.bottom, Constants.Padding.huge)
+                            .padding(.bottom, Constants.Padding.xExtraLarge)
                     }
                     .tag(1)
                 }
+                .clipShape(.rect(cornerRadius: Constants.CornerRadius.small, style: .circular))
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
 
                 // MARK: Back Button
