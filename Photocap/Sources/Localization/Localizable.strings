@@ -24,5 +24,5 @@
 /* Instructions */
 "picture_instruction" = "Let's take a picture";
 "record_instruction" = "Now let's record a 2 second video";
-"swipe_instruction" = "Swipe right to see your video";
+"swipe_instruction" = "Swipe left to see your video";
 
