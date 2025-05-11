@@ -29,6 +29,7 @@ struct FramePicker: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .clipped()
         .background(Color.black)
+        .zoomable()
         .onChange(of: frameTimePosition) { newPos in
             generatePreciseFrame(at: newPos)
         }

@@ -40,6 +40,7 @@ struct ContentView: View {
                             .scaledToFill()
                             .frame(maxWidth: .infinity,
                                    maxHeight: .infinity)
+                            .zoomable()
 
                         Text(LocalizedStringKey("swipe_instruction"))
                             .foregroundColor(.white)
