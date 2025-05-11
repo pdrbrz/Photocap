@@ -4,36 +4,20 @@
 //
 //  Created by Pedro Braz on 11/05/25.
 //
-
-import AVFoundation
 import AVKit
-import Photos
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var camera = CameraService()
-    @State private var capturedImage: UIImage?
-    @State private var videoURL: URL?
-    @State private var currentFrame: UIImage?
-    @State private var isRecording = false
-
-    @State private var saveMessage = ""
-    @State private var showSaveToast = false
-
-    private var flashIconName: String {
-        switch camera.flashMode {
-        case .auto: return "bolt.badge.a.fill"
-        case .on: return "bolt.fill"
-        case .off: return "bolt.slash.fill"
-        @unknown default: return "bolt.badge.a.fill"
-        }
-    }
+    @StateObject private var viewModel = ContentViewModel()
 
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
 
-            if let img = capturedImage, let vidURL = videoURL {
+            if let img = viewModel.capturedImage,
+               let url = viewModel.videoURL
+            {
+                // Final comparison
                 VStack(spacing: 0) {
                     GeometryReader { geo in
                         VStack(spacing: 0) {
@@ -44,8 +28,8 @@ struct ContentView: View {
                                        height: geo.size.height / 2)
                                 .cornerRadius(8)
 
-                            FramePicker(asset: AVAsset(url: vidURL)) { frame in
-                                currentFrame = frame
+                            FramePicker(asset: AVAsset(url: url)) {
+                                viewModel.currentFrame = $0
                             }
                             .frame(width: geo.size.width,
                                    height: geo.size.height / 2)
@@ -54,32 +38,38 @@ struct ContentView: View {
                     }
 
                     HStack {
-                        Button("Save Photo") {
-                            savePhoto()
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .tint(.red)
-
+                        Button("Save Photo", action: viewModel.savePhoto)
+                            .buttonStyle(.borderedProminent)
+                            .tint(.red)
                         Spacer()
-
-                        Button("Save Frame") {
-                            saveFrame()
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .tint(.red)
+                        Button("Save Frame", action: viewModel.saveFrame)
+                            .buttonStyle(.borderedProminent)
+                            .tint(.red)
                     }
                     .padding()
                 }
+                .overlay(alignment: .topLeading) {
+                    Button {
+                        viewModel.reset()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundColor(.white)
+                            .padding(12)
+                            .background(Color.black.opacity(0.6))
+                            .clipShape(Circle())
+                    }
+                    .padding()
+                }
+
             } else {
-                CameraPreview(session: camera.session)
+                // Capture flow
+                CameraPreview(session: viewModel.session)
 
                 VStack {
                     Spacer()
-
-                    if capturedImage == nil {
-                        Button {
-                            camera.capturePhoto()
-                        } label: {
+                    if viewModel.capturedImage == nil {
+                        Button(action: viewModel.capturePhoto) {
                             Image(systemName: "camera.fill")
                                 .font(.system(size: 28))
                                 .foregroundColor(.white)
@@ -87,17 +77,13 @@ struct ContentView: View {
                                 .background(Color.red)
                                 .clipShape(Circle())
                         }
-
                     } else {
-                        if isRecording {
+                        if viewModel.isRecording {
                             Text("Recording…")
                                 .foregroundColor(.white)
                                 .padding(.bottom, 8)
                         } else {
-                            Button {
-                                isRecording = true
-                                camera.recordVideo(duration: 2)
-                            } label: {
+                            Button(action: viewModel.recordVideo) {
                                 Image(systemName: "record.circle.fill")
                                     .font(.system(size: 28))
                                     .foregroundColor(.white)
@@ -110,11 +96,11 @@ struct ContentView: View {
                 }
                 .padding(.bottom, 40)
                 .padding(.horizontal)
+
                 VStack {
                     HStack {
-                        // Toggle flash
-                        Button(action: camera.toggleFlash) {
-                            Image(systemName: flashIconName)
+                        Button(action: viewModel.toggleFlash) {
+                            Image(systemName: viewModel.flashIconName)
                                 .font(.system(size: 20))
                                 .foregroundColor(.white)
                                 .padding(10)
@@ -122,8 +108,7 @@ struct ContentView: View {
                                 .clipShape(Circle())
                         }
                         Spacer()
-                        // Flip camera
-                        Button(action: camera.switchCamera) {
+                        Button(action: viewModel.switchCamera) {
                             Image(systemName: "camera.rotate.fill")
                                 .font(.system(size: 20))
                                 .foregroundColor(.white)
@@ -134,13 +119,12 @@ struct ContentView: View {
                     }
                     .padding(.horizontal)
                     .padding(.top, 20)
-
                     Spacer()
                 }
             }
 
-            if showSaveToast {
-                Text(saveMessage)
+            if viewModel.showSaveToast {
+                Text(viewModel.saveMessage)
                     .foregroundColor(.white)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 10)
@@ -151,74 +135,15 @@ struct ContentView: View {
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             withAnimation(.easeOut(duration: 0.5)) {
-                                showSaveToast = false
+                                viewModel.showSaveToast = false
                             }
                         }
                     }
                     .padding(.top, 50)
             }
         }
-        .onAppear {
-            camera.start()
-            camera.onPhotoCapture = { img in
-                capturedImage = img
-            }
-            camera.onVideoCapture = { url in
-                videoURL = url
-                isRecording = false
-                camera.stop()
-            }
-        }
-        .animation(.easeInOut(duration: 0.25), value: showSaveToast)
-    }
-
-    private func savePhoto() {
-        guard let img = capturedImage else { return }
-        PHPhotoLibrary.requestAuthorization { status in
-            if status == .authorized || status == .limited {
-                PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAsset(from: img)
-                }) { success, _ in
-                    DispatchQueue.main.async {
-                        saveMessage = success ? "Photo saved!" : "Photo save failed"
-                        withAnimation(.easeIn(duration: 0.25)) {
-                            showSaveToast = true
-                        }
-                    }
-                }
-            } else {
-                DispatchQueue.main.async {
-                    saveMessage = "Photo library access denied"
-                    withAnimation(.easeIn(duration: 0.25)) {
-                        showSaveToast = true
-                    }
-                }
-            }
-        }
-    }
-
-    private func saveFrame() {
-        guard let frame = currentFrame else { return }
-        PHPhotoLibrary.requestAuthorization { status in
-            if status == .authorized || status == .limited {
-                PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAsset(from: frame)
-                }) { success, _ in
-                    DispatchQueue.main.async {
-                        saveMessage = success ? "Frame saved!" : "Frame save failed"
-                        withAnimation(.easeIn(duration: 0.25)) {
-                            showSaveToast = true
-                        }
-                    }
-                }
-            } else {
-                DispatchQueue.main.async {
-                    saveMessage = "Photo library access denied"
-                    withAnimation(.easeIn(duration: 0.25)) {
-                        showSaveToast = true
-                    }
-                }
-            }
-        }
+        .onAppear(perform: viewModel.setup)
+        .animation(.easeInOut(duration: 0.25),
+                   value: viewModel.showSaveToast)
     }
 }

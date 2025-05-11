@@ -19,6 +19,9 @@
 		B4FD7A862DD0E57300E7FA40 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A852DD0E57300E7FA40 /* ContentView.swift */; };
 		B4FD7A882DD0E58800E7FA40 /* PhotocapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A872DD0E58800E7FA40 /* PhotocapApp.swift */; };
 		B4FD7A8A2DD0F81800E7FA40 /* FramePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A892DD0F81800E7FA40 /* FramePicker.swift */; };
+		B4FD7A8C2DD1080900E7FA40 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A8B2DD1080900E7FA40 /* ContentViewModel.swift */; };
+		B4FD7A8E2DD1084100E7FA40 /* CameraServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A8D2DD1084100E7FA40 /* CameraServiceTests.swift */; };
+		B4FD7A902DD1087300E7FA40 /* ContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A8F2DD1087300E7FA40 /* ContentViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,9 @@
 		B4FD7A852DD0E57300E7FA40 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B4FD7A872DD0E58800E7FA40 /* PhotocapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotocapApp.swift; sourceTree = "<group>"; };
 		B4FD7A892DD0F81800E7FA40 /* FramePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FramePicker.swift; sourceTree = "<group>"; };
+		B4FD7A8B2DD1080900E7FA40 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		B4FD7A8D2DD1084100E7FA40 /* CameraServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraServiceTests.swift; sourceTree = "<group>"; };
+		B4FD7A8F2DD1087300E7FA40 /* ContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +129,8 @@
 			isa = PBXGroup;
 			children = (
 				B458AF312DCE51CA00CA8778 /* PhotocapTests.swift */,
+				B4FD7A8D2DD1084100E7FA40 /* CameraServiceTests.swift */,
+				B4FD7A8F2DD1087300E7FA40 /* ContentViewModelTests.swift */,
 			);
 			path = PhotocapTests;
 			sourceTree = "<group>";
@@ -170,6 +178,7 @@
 				B4FD7A852DD0E57300E7FA40 /* ContentView.swift */,
 				B4FD7A872DD0E58800E7FA40 /* PhotocapApp.swift */,
 				B4FD7A892DD0F81800E7FA40 /* FramePicker.swift */,
+				B4FD7A8B2DD1080900E7FA40 /* ContentViewModel.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -317,6 +326,7 @@
 				B4FD7A842DD0E55700E7FA40 /* CameraPreview.swift in Sources */,
 				B4FD7A822DD0E53F00E7FA40 /* CameraService.swift in Sources */,
 				B4FD7A862DD0E57300E7FA40 /* ContentView.swift in Sources */,
+				B4FD7A8C2DD1080900E7FA40 /* ContentViewModel.swift in Sources */,
 				B4FD7A8A2DD0F81800E7FA40 /* FramePicker.swift in Sources */,
 				B4FD7A7E2DD0E51F00E7FA40 /* Features.swift in Sources */,
 				B4FD7A882DD0E58800E7FA40 /* PhotocapApp.swift in Sources */,
@@ -327,7 +337,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4FD7A8E2DD1084100E7FA40 /* CameraServiceTests.swift in Sources */,
 				B458AF322DCE51CA00CA8778 /* PhotocapTests.swift in Sources */,
+				B4FD7A902DD1087300E7FA40 /* ContentViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
