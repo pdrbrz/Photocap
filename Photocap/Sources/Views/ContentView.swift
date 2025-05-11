@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var viewModel = ContentViewModel()
     @State private var pageIndex = 0
-    @State private var position: Double = 0 // 0…maxVideoDuration
+    @State private var position: Double = Constants.maxVideoDuration / 2
 
     private func openSettings() {
         guard let url = URL(string: UIApplication.openSettingsURLString)
