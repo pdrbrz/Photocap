@@ -23,7 +23,6 @@ struct ContentView: View {
             Color.black
                 .ignoresSafeArea()
             // I would like to separate this UI components into other files
-            // (like a proper ViewController, etc)
             // but I'l keep them here for the sake of simplicity,
             // and to don't take much longer than the requested time for the assessment
             if let img = viewModel.capturedImage,
