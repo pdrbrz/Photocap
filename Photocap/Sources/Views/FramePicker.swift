@@ -41,6 +41,9 @@ struct FramePicker: View {
     // MARK: Private Methods
 
     private func generatePreciseFrame(at seconds: Double) {
+        // Planned Improvements:
+        // Use a single generator instace instead of creating one for each frame,
+        // the current implementation is expensive.
         let generator = AVAssetImageGenerator(asset: asset)
         generator.appliesPreferredTrackTransform = true
         generator.requestedTimeToleranceBefore = .zero
