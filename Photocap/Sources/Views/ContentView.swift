@@ -4,6 +4,7 @@
 //
 //  Created by Pedro Braz on 11/05/25.
 //
+
 import AVKit
 import SwiftUI
 
@@ -38,11 +39,15 @@ struct ContentView: View {
                     }
 
                     HStack {
-                        Button("Save Photo", action: viewModel.savePhoto)
+                        Button(LocalizedStringKey("save_photo"),
+                               action: viewModel.savePhoto)
                             .buttonStyle(.borderedProminent)
                             .tint(.red)
+
                         Spacer()
-                        Button("Save Frame", action: viewModel.saveFrame)
+
+                        Button(LocalizedStringKey("save_frame"),
+                               action: viewModel.saveFrame)
                             .buttonStyle(.borderedProminent)
                             .tint(.red)
                     }
@@ -58,6 +63,7 @@ struct ContentView: View {
                             .padding(12)
                             .background(Color.black.opacity(0.6))
                             .clipShape(Circle())
+                            .accessibilityLabel(LocalizedStringKey("back_button_accessibility"))
                     }
                     .padding()
                 }
@@ -79,7 +85,7 @@ struct ContentView: View {
                         }
                     } else {
                         if viewModel.isRecording {
-                            Text("Recording…")
+                            Text(LocalizedStringKey("recording"))
                                 .foregroundColor(.white)
                                 .padding(.bottom, 8)
                         } else {
@@ -97,6 +103,7 @@ struct ContentView: View {
                 .padding(.bottom, 40)
                 .padding(.horizontal)
 
+                // top controls
                 VStack {
                     HStack {
                         Button(action: viewModel.toggleFlash) {
@@ -106,6 +113,7 @@ struct ContentView: View {
                                 .padding(10)
                                 .background(Color.black.opacity(0.5))
                                 .clipShape(Circle())
+                                .accessibilityLabel(LocalizedStringKey(viewModel.flashAccessibilityKey))
                         }
                         Spacer()
                         Button(action: viewModel.switchCamera) {
@@ -123,6 +131,7 @@ struct ContentView: View {
                 }
             }
 
+            // Toast
             if viewModel.showSaveToast {
                 Text(viewModel.saveMessage)
                     .foregroundColor(.white)

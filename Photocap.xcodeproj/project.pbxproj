@@ -147,11 +147,13 @@
 		B4FD7A5E2DCE940200E7FA40 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				B4FD7A802DD0E53200E7FA40 /* Services */,
-				B4FD7A7F2DD0E52400E7FA40 /* Features */,
+				B4FD7A7D2DD0E51F00E7FA40 /* Features.swift */,
 				B4FD7A622DCE952500E7FA40 /* Localization */,
 				B4FD7A5F2DCE940C00E7FA40 /* Managers */,
-				B4FD7A7D2DD0E51F00E7FA40 /* Features.swift */,
+				B4FD7A872DD0E58800E7FA40 /* PhotocapApp.swift */,
+				B4FD7A802DD0E53200E7FA40 /* Services */,
+				B4FD7A912DD10FC300E7FA40 /* ViewModels */,
+				B4FD7A7F2DD0E52400E7FA40 /* Views */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -171,16 +173,14 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
-		B4FD7A7F2DD0E52400E7FA40 /* Features */ = {
+		B4FD7A7F2DD0E52400E7FA40 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				B4FD7A832DD0E55700E7FA40 /* CameraPreview.swift */,
 				B4FD7A852DD0E57300E7FA40 /* ContentView.swift */,
-				B4FD7A872DD0E58800E7FA40 /* PhotocapApp.swift */,
 				B4FD7A892DD0F81800E7FA40 /* FramePicker.swift */,
-				B4FD7A8B2DD1080900E7FA40 /* ContentViewModel.swift */,
 			);
-			path = Features;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		B4FD7A802DD0E53200E7FA40 /* Services */ = {
@@ -189,6 +189,14 @@
 				B4FD7A812DD0E53F00E7FA40 /* CameraService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		B4FD7A912DD10FC300E7FA40 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B4FD7A8B2DD1080900E7FA40 /* ContentViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
