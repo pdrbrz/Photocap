@@ -17,3 +17,9 @@
 "flash_auto" = "Flash: Auto";
 "flash_on" = "Flash: On";
 "flash_off" = "Flash: Off";
+
+/* Instructions */
+"picture_instruction" = "Let's take a picture";
+"record_instruction" = "Now let's record a 2 second video";
+"swipe_instruction" = "Swipe right to see your video";
+

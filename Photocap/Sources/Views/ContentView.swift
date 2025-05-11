@@ -3,156 +3,198 @@
 //  Photocap
 //
 //  Created by Pedro Braz on 11/05/25.
-//
 
 import AVKit
 import SwiftUI
 
 struct ContentView: View {
     @StateObject private var viewModel = ContentViewModel()
+    @State private var pageIndex = 0
+    @State private var position: Double = 0 // 0…maxVideoDuration
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            Color.black
+                .ignoresSafeArea()
 
             if let img = viewModel.capturedImage,
-               let url = viewModel.videoURL
+               let vidURL = viewModel.videoURL
             {
-                // Final comparison
-                VStack(spacing: 0) {
-                    GeometryReader { geo in
-                        VStack(spacing: 0) {
-                            Image(uiImage: img)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: geo.size.width,
-                                       height: geo.size.height / 2)
-                                .cornerRadius(8)
+                TabView(selection: $pageIndex) {
+                    // MARK: Photo Page
 
-                            FramePicker(asset: AVAsset(url: url)) {
-                                viewModel.currentFrame = $0
-                            }
-                            .frame(width: geo.size.width,
-                                   height: geo.size.height / 2)
-                            .cornerRadius(8)
-                        }
-                    }
+                    VStack {
+                        Spacer()
 
-                    HStack {
+                        Image(uiImage: img)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity,
+                                   maxHeight: .infinity)
+                            .clipped()
+
+                        Text(LocalizedStringKey("swipe_instruction"))
+                            .foregroundColor(.white)
+                            .padding(.bottom, Constants.Padding.small)
+
                         Button(LocalizedStringKey("save_photo"),
                                action: viewModel.savePhoto)
                             .buttonStyle(.borderedProminent)
                             .tint(.red)
+                            .padding(.bottom, Constants.Padding.extraLarge)
+                    }
+                    .tag(0)
+                    .ignoresSafeArea(edges: .top)
 
-                        Spacer()
+                    // MARK: Video Page
 
+                    VStack(spacing: 0) {
+                        FramePicker(
+                            asset: AVAsset(url: vidURL),
+                            frameTimePosition: position
+                        ) { frame in
+                            viewModel.currentFrame = frame
+                        }
+                        .ignoresSafeArea(edges: .top)
+
+                        Slider(value: $position,
+                               in: 0 ... Constants.maxVideoDuration,
+                               step: 1 / 30)
+                            .padding(.horizontal, Constants.Padding.medium)
+                            .padding(.top, Constants.Padding.small)
+                            .padding(.bottom, Constants.Padding.medium)
                         Button(LocalizedStringKey("save_frame"),
                                action: viewModel.saveFrame)
                             .buttonStyle(.borderedProminent)
                             .tint(.red)
+                            .padding(.bottom, Constants.Padding.huge)
                     }
-                    .padding()
+                    .tag(1)
                 }
-                .overlay(alignment: .topLeading) {
-                    Button {
-                        viewModel.reset()
-                    } label: {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 20, weight: .semibold))
-                            .foregroundColor(.white)
-                            .padding(12)
-                            .background(Color.black.opacity(0.6))
-                            .clipShape(Circle())
-                            .accessibilityLabel(LocalizedStringKey("back_button_accessibility"))
-                    }
-                    .padding()
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+
+                // MARK: Back Button
+
+                Button {
+                    viewModel.reset()
+                    pageIndex = 0
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: Constants.Font.control,
+                                      weight: .semibold))
+                        .foregroundColor(.white)
+                        .padding(Constants.Padding.xxxSmall)
+                        .background(Color.black.opacity(Constants.Opacity.backButton))
+                        .clipShape(Circle())
+                        .accessibilityLabel(
+                            LocalizedStringKey("back_button_accessibility")
+                        )
                 }
+                .padding()
+                .frame(maxWidth: .infinity,
+                       maxHeight: .infinity,
+                       alignment: .topLeading)
 
             } else {
-                // Capture flow
+                // MARK: Live Camera Flow
+
                 CameraPreview(session: viewModel.session)
 
                 VStack {
                     Spacer()
+
                     if viewModel.capturedImage == nil {
+                        Text(LocalizedStringKey("picture_instruction"))
+                            .foregroundColor(.white)
+                            .padding(.bottom, Constants.Padding.small)
+
                         Button(action: viewModel.capturePhoto) {
                             Image(systemName: "camera.fill")
-                                .font(.system(size: 28))
+                                .font(.system(size: Constants.Font.capture))
                                 .foregroundColor(.white)
-                                .padding(24)
+                                .padding(Constants.Padding.large)
                                 .background(Color.red)
                                 .clipShape(Circle())
                         }
+
+                    } else if viewModel.isRecording {
+                        Text(LocalizedStringKey("recording"))
+                            .foregroundColor(.white)
+                            .padding(.bottom, Constants.Padding.small)
+
                     } else {
-                        if viewModel.isRecording {
-                            Text(LocalizedStringKey("recording"))
+                        Text(LocalizedStringKey("record_instruction"))
+                            .foregroundColor(.white)
+                            .padding(.bottom, Constants.Padding.small)
+
+                        Button(action: viewModel.recordVideo) {
+                            Image(systemName: "record.circle.fill")
+                                .font(.system(size: Constants.Font.capture))
                                 .foregroundColor(.white)
-                                .padding(.bottom, 8)
-                        } else {
-                            Button(action: viewModel.recordVideo) {
-                                Image(systemName: "record.circle.fill")
-                                    .font(.system(size: 28))
-                                    .foregroundColor(.white)
-                                    .padding(24)
-                                    .background(Color.red)
-                                    .clipShape(Circle())
-                            }
+                                .padding(Constants.Padding.large)
+                                .background(Color.red)
+                                .clipShape(Circle())
                         }
                     }
-                }
-                .padding(.bottom, 40)
-                .padding(.horizontal)
 
-                // top controls
+                    Spacer().frame(height: Constants.Spacer.bottom)
+                }
+                .padding(.horizontal, Constants.Padding.medium)
+
+                // MARK: Top Controls
+
                 VStack {
                     HStack {
                         Button(action: viewModel.toggleFlash) {
                             Image(systemName: viewModel.flashIconName)
-                                .font(.system(size: 20))
+                                .font(.system(size: Constants.Font.control))
                                 .foregroundColor(.white)
-                                .padding(10)
-                                .background(Color.black.opacity(0.5))
+                                .padding(Constants.Padding.small)
+                                .background(Color.black.opacity(Constants.Opacity.topControl))
                                 .clipShape(Circle())
-                                .accessibilityLabel(LocalizedStringKey(viewModel.flashAccessibilityKey))
+                                .accessibilityLabel(
+                                    viewModel.flashAccessibilityKey
+                                )
                         }
                         Spacer()
                         Button(action: viewModel.switchCamera) {
                             Image(systemName: "camera.rotate.fill")
-                                .font(.system(size: 20))
+                                .font(.system(size: Constants.Font.control))
                                 .foregroundColor(.white)
-                                .padding(10)
-                                .background(Color.black.opacity(0.5))
+                                .padding(Constants.Padding.small)
+                                .background(Color.black.opacity(Constants.Opacity.topControl))
                                 .clipShape(Circle())
                         }
                     }
-                    .padding(.horizontal)
-                    .padding(.top, 20)
+                    .padding(.horizontal, Constants.Padding.medium)
+                    .padding(.top, Constants.Padding.large)
                     Spacer()
                 }
             }
 
-            // Toast
+            // MARK: Toast Feedback
+
             if viewModel.showSaveToast {
                 Text(viewModel.saveMessage)
                     .foregroundColor(.white)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
+                    .padding(.horizontal, Constants.Padding.medium)
+                    .padding(.vertical, Constants.Padding.small)
                     .background(.ultraThinMaterial)
-                    .cornerRadius(10)
+                    .cornerRadius(Constants.CornerRadius.toast)
                     .transition(.opacity)
                     .zIndex(1)
                     .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            withAnimation(.easeOut(duration: 0.5)) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Animation.toastDisplay) {
+                            withAnimation(.easeOut(duration: Constants.Animation.toastFade)) {
                                 viewModel.showSaveToast = false
                             }
                         }
                     }
-                    .padding(.top, 50)
+                    .padding(.top, Constants.Padding.toastTop)
             }
         }
         .onAppear(perform: viewModel.setup)
-        .animation(.easeInOut(duration: 0.25),
+        .animation(.easeInOut(duration: Constants.Animation.quick),
                    value: viewModel.showSaveToast)
     }
 }

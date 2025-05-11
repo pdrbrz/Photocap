@@ -1,4 +1,3 @@
-//
 //  FramePicker.swift
 //  Photocap
 //
@@ -9,36 +8,36 @@ import AVFoundation
 import SwiftUI
 
 struct FramePicker: View {
-    let asset: AVAsset
-    var onFrameChange: ((UIImage) -> Void)? // new
+    // MARK: Properties
 
-    @State private var position: Double = 0 // 0.0…1.0
+    let asset: AVAsset
+    let frameTimePosition: Double
+    var onFrameChange: (UIImage) -> Void //
+
     @State private var frameImage: UIImage?
 
     var body: some View {
-        VStack {
+        Group {
             if let img = frameImage {
                 Image(uiImage: img)
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
             } else {
                 ProgressView()
-                    .frame(maxHeight: .infinity)
             }
-
-            Slider(value: $position)
-                .padding(.horizontal)
-                .onChange(of: position) { newPos in
-                    let seconds = newPos * asset.duration.seconds
-                    generatePreciseFrame(at: seconds)
-                }
-                .onAppear {
-                    position = 0
-                    generatePreciseFrame(at: 0)
-                }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .clipped()
         .background(Color.black)
+        .onChange(of: frameTimePosition) { newPos in
+            generatePreciseFrame(at: newPos)
+        }
+        .onAppear {
+            generatePreciseFrame(at: frameTimePosition)
+        }
     }
+
+    // MARK: Private Methods
 
     private func generatePreciseFrame(at seconds: Double) {
         let generator = AVAssetImageGenerator(asset: asset)
@@ -46,16 +45,20 @@ struct FramePicker: View {
         generator.requestedTimeToleranceBefore = .zero
         generator.requestedTimeToleranceAfter = .zero
 
-        let time = CMTime(seconds: seconds,
-                          preferredTimescale: asset.duration.timescale)
-
+        let time = CMTime(
+            seconds: seconds,
+            preferredTimescale: asset.duration.timescale
+        )
         DispatchQueue.global(qos: .userInitiated).async {
             do {
-                let cg = try generator.copyCGImage(at: time, actualTime: nil)
+                let cg = try generator.copyCGImage(
+                    at: time,
+                    actualTime: nil
+                )
                 let ui = UIImage(cgImage: cg)
                 DispatchQueue.main.async {
-                    self.frameImage = ui
-                    self.onFrameChange?(ui) // notify parent
+                    frameImage = ui
+                    onFrameChange(ui)
                 }
             } catch {
                 print("Frame generation error:", error)

@@ -13,7 +13,6 @@
 		B458AF3C2DCE51CA00CA8778 /* PhotocapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B458AF3B2DCE51CA00CA8778 /* PhotocapUITests.swift */; };
 		B458AF3E2DCE51CA00CA8778 /* PhotocapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B458AF3D2DCE51CA00CA8778 /* PhotocapUITestsLaunchTests.swift */; };
 		B4FD7A642DCE955500E7FA40 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B4FD7A632DCE955500E7FA40 /* Localizable.strings */; };
-		B4FD7A7E2DD0E51F00E7FA40 /* Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A7D2DD0E51F00E7FA40 /* Features.swift */; };
 		B4FD7A822DD0E53F00E7FA40 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A812DD0E53F00E7FA40 /* CameraService.swift */; };
 		B4FD7A842DD0E55700E7FA40 /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A832DD0E55700E7FA40 /* CameraPreview.swift */; };
 		B4FD7A862DD0E57300E7FA40 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A852DD0E57300E7FA40 /* ContentView.swift */; };
@@ -22,6 +21,7 @@
 		B4FD7A8C2DD1080900E7FA40 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A8B2DD1080900E7FA40 /* ContentViewModel.swift */; };
 		B4FD7A8E2DD1084100E7FA40 /* CameraServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A8D2DD1084100E7FA40 /* CameraServiceTests.swift */; };
 		B4FD7A902DD1087300E7FA40 /* ContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A8F2DD1087300E7FA40 /* ContentViewModelTests.swift */; };
+		B4FD7A942DD12DA700E7FA40 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A932DD12DA700E7FA40 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,7 +51,6 @@
 		B458AF3B2DCE51CA00CA8778 /* PhotocapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotocapUITests.swift; sourceTree = "<group>"; };
 		B458AF3D2DCE51CA00CA8778 /* PhotocapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotocapUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B4FD7A632DCE955500E7FA40 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		B4FD7A7D2DD0E51F00E7FA40 /* Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features.swift; sourceTree = "<group>"; };
 		B4FD7A812DD0E53F00E7FA40 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
 		B4FD7A832DD0E55700E7FA40 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
 		B4FD7A852DD0E57300E7FA40 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -60,6 +59,7 @@
 		B4FD7A8B2DD1080900E7FA40 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		B4FD7A8D2DD1084100E7FA40 /* CameraServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraServiceTests.swift; sourceTree = "<group>"; };
 		B4FD7A8F2DD1087300E7FA40 /* ContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModelTests.swift; sourceTree = "<group>"; };
+		B4FD7A932DD12DA700E7FA40 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,22 +147,14 @@
 		B4FD7A5E2DCE940200E7FA40 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				B4FD7A7D2DD0E51F00E7FA40 /* Features.swift */,
+				B4FD7A922DD12D9C00E7FA40 /* Commons */,
 				B4FD7A622DCE952500E7FA40 /* Localization */,
-				B4FD7A5F2DCE940C00E7FA40 /* Managers */,
 				B4FD7A872DD0E58800E7FA40 /* PhotocapApp.swift */,
 				B4FD7A802DD0E53200E7FA40 /* Services */,
 				B4FD7A912DD10FC300E7FA40 /* ViewModels */,
 				B4FD7A7F2DD0E52400E7FA40 /* Views */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		B4FD7A5F2DCE940C00E7FA40 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Managers;
 			sourceTree = "<group>";
 		};
 		B4FD7A622DCE952500E7FA40 /* Localization */ = {
@@ -197,6 +189,14 @@
 				B4FD7A8B2DD1080900E7FA40 /* ContentViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		B4FD7A922DD12D9C00E7FA40 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				B4FD7A932DD12DA700E7FA40 /* Constants.swift */,
+			);
+			path = Commons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -335,8 +335,8 @@
 				B4FD7A822DD0E53F00E7FA40 /* CameraService.swift in Sources */,
 				B4FD7A862DD0E57300E7FA40 /* ContentView.swift in Sources */,
 				B4FD7A8C2DD1080900E7FA40 /* ContentViewModel.swift in Sources */,
+				B4FD7A942DD12DA700E7FA40 /* Constants.swift in Sources */,
 				B4FD7A8A2DD0F81800E7FA40 /* FramePicker.swift in Sources */,
-				B4FD7A7E2DD0E51F00E7FA40 /* Features.swift in Sources */,
 				B4FD7A882DD0E58800E7FA40 /* PhotocapApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
