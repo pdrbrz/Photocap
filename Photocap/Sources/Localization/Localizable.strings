@@ -1,19 +1,19 @@
 // MARK: - Localization Setup
 
 /* Buttons */
-"save_photo"               = "Save Photo";
-"save_frame"               = "Save Frame";
-"recording"                = "Recording…";
+"save_photo" = "Save Photo";
+"save_frame" = "Save Frame";
+"recording" = "Recording…";
 "back_button_accessibility" = "Go back to camera";
 
 /* Toast messages */
-"photo_saved"              = "Photo saved!";
-"photo_save_failed"        = "Photo save failed";
-"frame_saved"              = "Frame saved!";
-"frame_save_failed"        = "Frame save failed";
-"library_access_denied"    = "Photo library access denied";
+"photo_saved" = "Photo saved!";
+"photo_save_failed" = "Photo save failed";
+"frame_saved" = "Frame saved!";
+"frame_save_failed" = "Frame save failed";
+"library_access_denied" = "Photo library access denied";
 
-/* Flash icon accessibility (optional) */
-"flash_auto"               = "Flash: Auto";
-"flash_on"                 = "Flash: On";
-"flash_off"                = "Flash: Off";
+/* Flash icon accessibility */
+"flash_auto" = "Flash: Auto";
+"flash_on" = "Flash: On";
+"flash_off" = "Flash: Off";
