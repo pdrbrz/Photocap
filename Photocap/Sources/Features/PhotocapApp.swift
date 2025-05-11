@@ -2,7 +2,7 @@
 //  PhotocapApp.swift
 //  Photocap
 //
-//  Created by Pedro Braz on 09/05/25.
+//  Created by Pedro Braz on 11/05/25.
 //
 
 import SwiftUI

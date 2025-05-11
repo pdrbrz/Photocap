@@ -7,15 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B458AF212DCE51C900CA8778 /* PhotocapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B458AF202DCE51C900CA8778 /* PhotocapApp.swift */; };
-		B458AF232DCE51C900CA8778 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B458AF222DCE51C900CA8778 /* ContentView.swift */; };
 		B458AF252DCE51CA00CA8778 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B458AF242DCE51CA00CA8778 /* Assets.xcassets */; };
 		B458AF282DCE51CA00CA8778 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B458AF272DCE51CA00CA8778 /* Preview Assets.xcassets */; };
 		B458AF322DCE51CA00CA8778 /* PhotocapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B458AF312DCE51CA00CA8778 /* PhotocapTests.swift */; };
 		B458AF3C2DCE51CA00CA8778 /* PhotocapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B458AF3B2DCE51CA00CA8778 /* PhotocapUITests.swift */; };
 		B458AF3E2DCE51CA00CA8778 /* PhotocapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B458AF3D2DCE51CA00CA8778 /* PhotocapUITestsLaunchTests.swift */; };
-		B4FD7A612DCE942900E7FA40 /* CaptureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A602DCE942900E7FA40 /* CaptureManager.swift */; };
 		B4FD7A642DCE955500E7FA40 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B4FD7A632DCE955500E7FA40 /* Localizable.strings */; };
+		B4FD7A7E2DD0E51F00E7FA40 /* Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A7D2DD0E51F00E7FA40 /* Features.swift */; };
+		B4FD7A822DD0E53F00E7FA40 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A812DD0E53F00E7FA40 /* CameraService.swift */; };
+		B4FD7A842DD0E55700E7FA40 /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A832DD0E55700E7FA40 /* CameraPreview.swift */; };
+		B4FD7A862DD0E57300E7FA40 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A852DD0E57300E7FA40 /* ContentView.swift */; };
+		B4FD7A882DD0E58800E7FA40 /* PhotocapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A872DD0E58800E7FA40 /* PhotocapApp.swift */; };
+		B4FD7A8A2DD0F81800E7FA40 /* FramePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD7A892DD0F81800E7FA40 /* FramePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,8 +40,6 @@
 
 /* Begin PBXFileReference section */
 		B458AF1D2DCE51C900CA8778 /* Photocap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Photocap.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B458AF202DCE51C900CA8778 /* PhotocapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotocapApp.swift; sourceTree = "<group>"; };
-		B458AF222DCE51C900CA8778 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B458AF242DCE51CA00CA8778 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B458AF272DCE51CA00CA8778 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B458AF2D2DCE51CA00CA8778 /* PhotocapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotocapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,8 +47,13 @@
 		B458AF372DCE51CA00CA8778 /* PhotocapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotocapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B458AF3B2DCE51CA00CA8778 /* PhotocapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotocapUITests.swift; sourceTree = "<group>"; };
 		B458AF3D2DCE51CA00CA8778 /* PhotocapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotocapUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		B4FD7A602DCE942900E7FA40 /* CaptureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureManager.swift; sourceTree = "<group>"; };
 		B4FD7A632DCE955500E7FA40 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		B4FD7A7D2DD0E51F00E7FA40 /* Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features.swift; sourceTree = "<group>"; };
+		B4FD7A812DD0E53F00E7FA40 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
+		B4FD7A832DD0E55700E7FA40 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
+		B4FD7A852DD0E57300E7FA40 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B4FD7A872DD0E58800E7FA40 /* PhotocapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotocapApp.swift; sourceTree = "<group>"; };
+		B4FD7A892DD0F81800E7FA40 /* FramePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FramePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,8 +105,6 @@
 			isa = PBXGroup;
 			children = (
 				B4FD7A5E2DCE940200E7FA40 /* Sources */,
-				B458AF202DCE51C900CA8778 /* PhotocapApp.swift */,
-				B458AF222DCE51C900CA8778 /* ContentView.swift */,
 				B458AF242DCE51CA00CA8778 /* Assets.xcassets */,
 				B458AF262DCE51CA00CA8778 /* Preview Content */,
 			);
@@ -135,8 +139,11 @@
 		B4FD7A5E2DCE940200E7FA40 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				B4FD7A802DD0E53200E7FA40 /* Services */,
+				B4FD7A7F2DD0E52400E7FA40 /* Features */,
 				B4FD7A622DCE952500E7FA40 /* Localization */,
 				B4FD7A5F2DCE940C00E7FA40 /* Managers */,
+				B4FD7A7D2DD0E51F00E7FA40 /* Features.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -144,7 +151,6 @@
 		B4FD7A5F2DCE940C00E7FA40 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				B4FD7A602DCE942900E7FA40 /* CaptureManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -155,6 +161,25 @@
 				B4FD7A632DCE955500E7FA40 /* Localizable.strings */,
 			);
 			path = Localization;
+			sourceTree = "<group>";
+		};
+		B4FD7A7F2DD0E52400E7FA40 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				B4FD7A832DD0E55700E7FA40 /* CameraPreview.swift */,
+				B4FD7A852DD0E57300E7FA40 /* ContentView.swift */,
+				B4FD7A872DD0E58800E7FA40 /* PhotocapApp.swift */,
+				B4FD7A892DD0F81800E7FA40 /* FramePicker.swift */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		B4FD7A802DD0E53200E7FA40 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B4FD7A812DD0E53F00E7FA40 /* CameraService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,6 +250,7 @@
 				TargetAttributes = {
 					B458AF1C2DCE51C900CA8778 = {
 						CreatedOnToolsVersion = 15.3;
+						LastSwiftMigration = 1530;
 					};
 					B458AF2C2DCE51CA00CA8778 = {
 						CreatedOnToolsVersion = 15.3;
@@ -288,9 +314,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B458AF232DCE51C900CA8778 /* ContentView.swift in Sources */,
-				B458AF212DCE51C900CA8778 /* PhotocapApp.swift in Sources */,
-				B4FD7A612DCE942900E7FA40 /* CaptureManager.swift in Sources */,
+				B4FD7A842DD0E55700E7FA40 /* CameraPreview.swift in Sources */,
+				B4FD7A822DD0E53F00E7FA40 /* CameraService.swift in Sources */,
+				B4FD7A862DD0E57300E7FA40 /* ContentView.swift in Sources */,
+				B4FD7A8A2DD0F81800E7FA40 /* FramePicker.swift in Sources */,
+				B4FD7A7E2DD0E51F00E7FA40 /* Features.swift in Sources */,
+				B4FD7A882DD0E58800E7FA40 /* PhotocapApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +480,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Photocap/Preview Content\"";
@@ -458,6 +488,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to capture photos and video frames.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app needs access to the microphone to record audio with your videos";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires photo library access to save captured images.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -472,6 +503,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = PedroBraz.Photocap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -482,6 +514,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Photocap/Preview Content\"";
@@ -489,6 +522,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to capture photos and video frames.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app needs access to the microphone to record audio with your videos";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires photo library access to save captured images.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
