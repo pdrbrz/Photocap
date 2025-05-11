@@ -201,6 +201,23 @@ struct ContentView: View {
                     .padding(.top, Constants.Padding.toastTop)
             }
         }
+        .onAppear {
+            viewModel.checkCameraAuthorization()
+        }
+        // Check Camera permission
+        .alert("Camera Access Needed",
+               isPresented: $viewModel.showCameraSettingsAlert)
+        {
+            Button("Go to Settings") {
+                guard let url = URL(string: UIApplication.openSettingsURLString)
+                else { return }
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Please allow camera access in Settings to take photos and videos.")
+        }
+        // Check Photos permission
         .alert("Photos Permission Needed",
                isPresented: $viewModel.showSettingsAlert)
         {

@@ -21,6 +21,7 @@ final class ContentViewModel: ObservableObject {
     @Published var showSaveToast: Bool = false
     @Published var videoURL: URL?
     @Published var showSettingsAlert = false
+    @Published var showCameraSettingsAlert = false
 
     var flashAccessibilityKey: String {
         switch cameraService.flashMode {
@@ -113,6 +114,71 @@ final class ContentViewModel: ObservableObject {
         cameraService.toggleFlash()
     }
 
+    func checkCameraAuthorization() {
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        switch status {
+        case .authorized:
+            cameraService.start()
+
+        case .notDetermined:
+            // first‐time: prompt
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                DispatchQueue.main.async {
+                    if granted {
+                        self.cameraService.start()
+                    } else {
+                        self.showCameraSettingsAlert = true
+                    }
+                }
+            }
+
+        case .denied, .restricted:
+            // user has previously denied → show alert
+            showCameraSettingsAlert = true
+
+        @unknown default:
+            showCameraSettingsAlert = true
+        }
+    }
+
+    func saveImage(_ img: UIImage, success: String, failure: String) {
+        // Since the is a lot of phone permissons to handle
+        // (Camera, Photos, location etc)
+        // one good improvement would be a PermissionManager to handle those scenarios
+        PHPhotoLibrary.requestAuthorization { status in
+            switch status {
+            case .authorized, .limited:
+                PHPhotoLibrary.shared().performChanges {
+                    PHAssetChangeRequest
+                        .creationRequestForAsset(from: img)
+                } completionHandler: { ok, _ in
+                    // handleSaveResult will publish saveMessage/showSaveToast
+                    // — dispatch it to the main queue
+                    DispatchQueue.main.async {
+                        self.handleSaveResult(
+                            ok: ok,
+                            success: success,
+                            failure: failure
+                        )
+                    }
+                }
+
+            case .denied, .restricted:
+                // user denied/restricted—show the Settings alert on main
+                DispatchQueue.main.async {
+                    self.showSettingsAlert = true
+                }
+
+            case .notDetermined:
+                // should not happen here
+                break
+
+            @unknown default:
+                break
+            }
+        }
+    }
+
     // MARK: - Private Methods
 
     private func handlePhotoCapture(_ img: UIImage) {
@@ -126,32 +192,6 @@ final class ContentViewModel: ObservableObject {
             self.videoURL = url
             self.isRecording = false
             self.cameraService.stop()
-        }
-    }
-
-    func saveImage(_ img: UIImage, success: String, failure: String) {
-        PHPhotoLibrary.requestAuthorization { status in
-            DispatchQueue.main.async {
-                switch status {
-                case .authorized, .limited:
-                    PHPhotoLibrary.shared().performChanges {
-                        PHAssetChangeRequest.creationRequestForAsset(from: img)
-                    } completionHandler: { ok, _ in
-                        self.handleSaveResult(ok: ok, success: success, failure: failure)
-                    }
-
-                case .denied, .restricted:
-                    // user has denied or restricted—ask them to go to Settings
-                    self.showSettingsAlert = true
-
-                case .notDetermined:
-                    // unlikely, since requestAuthorization just returned a value
-                    break
-
-                @unknown default:
-                    break
-                }
-            }
         }
     }
 
