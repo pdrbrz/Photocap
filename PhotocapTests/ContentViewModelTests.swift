@@ -10,6 +10,7 @@ import XCTest
 
 final class ContentViewModelTests: XCTestCase {
     // a simple mock to verify switchCamera is forwarded
+    // See comment in CameraServiceTests
     class MockCameraService: CameraService {
         var didSwitch = false
         override func switchCamera() {

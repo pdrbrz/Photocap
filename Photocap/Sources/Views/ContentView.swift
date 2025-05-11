@@ -12,11 +12,19 @@ struct ContentView: View {
     @State private var pageIndex = 0
     @State private var position: Double = 0 // 0…maxVideoDuration
 
+    private func openSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString)
+        else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+
     var body: some View {
         ZStack {
             Color.black
                 .ignoresSafeArea()
-
+            // I would like to separate this UI components into other files
+            // but I'l keep them here for the sake of simplicity,
+            // to don't take much longer than the requested time for the assessment
             if let img = viewModel.capturedImage,
                let vidURL = viewModel.videoURL
             {
@@ -192,6 +200,16 @@ struct ContentView: View {
                     }
                     .padding(.top, Constants.Padding.toastTop)
             }
+        }
+        .alert("Photos Permission Needed",
+               isPresented: $viewModel.showSettingsAlert)
+        {
+            Button("Go to Settings") {
+                openSettings()
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Please allow Photos access so you can save your photos and videos.")
         }
         .onAppear(perform: viewModel.setup)
         .animation(.easeInOut(duration: Constants.Animation.quick),

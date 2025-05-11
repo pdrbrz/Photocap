@@ -9,6 +9,11 @@
 import XCTest
 
 final class CameraServiceTests: XCTestCase {
+    // I created some example unit tests, but there is space for improvement here
+    // For example, I could create a CameraServiceProtocol to conform CameraService
+    // That would allow me to create a more elaborated Mock for it and check
+    // if the declared methods in the protocol are working as expected in the concrete class.
+
     func test_toggleFlash_whenCalled_shouldCycleThroughAllModes() {
         let cameraService = CameraService()
         cameraService.toggleFlash()

@@ -20,6 +20,7 @@ final class ContentViewModel: ObservableObject {
     @Published var saveMessage: String = ""
     @Published var showSaveToast: Bool = false
     @Published var videoURL: URL?
+    @Published var showSettingsAlert = false
 
     var flashAccessibilityKey: String {
         switch cameraService.flashMode {
@@ -128,29 +129,37 @@ final class ContentViewModel: ObservableObject {
         }
     }
 
-    private func saveImage(_ img: UIImage, success: String, failure: String) {
+    func saveImage(_ img: UIImage, success: String, failure: String) {
         PHPhotoLibrary.requestAuthorization { status in
-            let successMsg = NSLocalizedString(success, comment: "")
-            let failureMsg = NSLocalizedString(failure, comment: "")
-            var msg = ""
-
-            if status == .authorized || status == .limited {
-                PHPhotoLibrary.shared().performChanges {
-                    PHAssetChangeRequest.creationRequestForAsset(from: img)
-                } completionHandler: { ok, _ in
-                    msg = ok ? successMsg : failureMsg
-                    DispatchQueue.main.async {
-                        self.saveMessage = msg
-                        self.showSaveToast = true
+            DispatchQueue.main.async {
+                switch status {
+                case .authorized, .limited:
+                    PHPhotoLibrary.shared().performChanges {
+                        PHAssetChangeRequest.creationRequestForAsset(from: img)
+                    } completionHandler: { ok, _ in
+                        self.handleSaveResult(ok: ok, success: success, failure: failure)
                     }
-                }
-            } else {
-                msg = NSLocalizedString("library_access_denied", comment: "")
-                DispatchQueue.main.async {
-                    self.saveMessage = msg
-                    self.showSaveToast = true
+
+                case .denied, .restricted:
+                    // user has denied or restricted—ask them to go to Settings
+                    self.showSettingsAlert = true
+
+                case .notDetermined:
+                    // unlikely, since requestAuthorization just returned a value
+                    break
+
+                @unknown default:
+                    break
                 }
             }
+        }
+    }
+
+    private func handleSaveResult(ok: Bool, success: String, failure: String) {
+        let msgKey = ok ? success : failure
+        saveMessage = NSLocalizedString(msgKey, comment: "")
+        withAnimation {
+            self.showSaveToast = true
         }
     }
 }

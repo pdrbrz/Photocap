@@ -1,5 +1,8 @@
 // MARK: - Localization Setup
 
+// A simple localizable file. I thought it could be a nice addition
+// since the team mentioned the desire to localize the app in the future.
+
 /* Buttons */
 "save_photo" = "Save Photo";
 "save_frame" = "Save Frame";

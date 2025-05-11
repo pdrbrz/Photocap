@@ -132,7 +132,8 @@ class CameraService: NSObject, ObservableObject {
             {
                 session.addInput(videoIn)
             }
-            // lock to 30 fps
+            // I choose to lock the video into 30fps and limit to 2 seconds for the sake of simplicity
+            // That way the user has 60 frames to pick from instead of, for example, 600 frames from 60fps for 10 seconds
             if let _ = cam.activeFormat.videoSupportedFrameRateRanges
                 .first(where: { $0.maxFrameRate >= 60 })
             {
@@ -143,15 +144,6 @@ class CameraService: NSObject, ObservableObject {
             }
         }
 
-        // audio input
-        if let mic = AVCaptureDevice.default(for: .audio),
-           let audioIn = try? AVCaptureDeviceInput(device: mic),
-           session.canAddInput(audioIn)
-        {
-            session.addInput(audioIn)
-        }
-
-        // outputs
         if session.canAddOutput(photoOutput) {
             session.addOutput(photoOutput)
         }
