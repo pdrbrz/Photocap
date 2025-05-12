@@ -5,12 +5,23 @@
 //  Created by Pedro Braz on 11/05/25.
 
 import AVKit
+import Combine
 import SwiftUI
 
 struct ContentView: View {
     @StateObject private var viewModel = ContentViewModel()
     @State private var pageIndex = 0
     @State private var position: Double = Constants.maxVideoDuration / 2
+    // The debounced position, passed into FramePicker
+    // I added this to avoid a crash/"leak"
+    // Before this change the user could slide the frame selector tool
+    // very fast, creating dozens of frames at the same time
+    // and crashing the app due memory shortage.
+    // With this change there is a small wait time after the user
+    // stops moving the slider to start generating the frame.
+    @State private var debouncedPosition: Double = Constants.maxVideoDuration / 2
+    @State private var positionSubject = PassthroughSubject<Double, Never>()
+    @State private var cancellables = Set<AnyCancellable>()
 
     private func openSettings() {
         guard let url = URL(string: UIApplication.openSettingsURLString)
@@ -23,8 +34,9 @@ struct ContentView: View {
             Color.black
                 .ignoresSafeArea()
             // I would like to separate this UI components into other files
-            // but I'l keep them here for the sake of simplicity,
+            // but I'll keep them here for the sake of simplicity,
             // and to don't take much longer than the requested time for the assessment
+
             if let img = viewModel.capturedImage,
                let vidURL = viewModel.videoURL
             {
@@ -60,7 +72,7 @@ struct ContentView: View {
                     VStack(spacing: 0) {
                         FramePicker(
                             asset: AVAsset(url: vidURL),
-                            frameTimePosition: position
+                            frameTimePosition: debouncedPosition
                         ) { frame in
                             viewModel.currentFrame = frame
                         }
@@ -72,6 +84,11 @@ struct ContentView: View {
                             .padding(.horizontal, Constants.Padding.medium)
                             .padding(.top, Constants.Padding.small)
                             .padding(.bottom, Constants.Padding.medium)
+                            // send raw slider changes into the subject
+                            .onChange(of: position) { newValue in
+                                positionSubject.send(newValue)
+                            }
+
                         Button(LocalizedStringKey("save_frame"),
                                action: viewModel.saveFrame)
                             .buttonStyle(.borderedProminent)
@@ -101,9 +118,11 @@ struct ContentView: View {
                         )
                 }
                 .padding()
-                .frame(maxWidth: .infinity,
-                       maxHeight: .infinity,
-                       alignment: .topLeading)
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity,
+                    alignment: .topLeading
+                )
 
             } else {
                 // MARK: Live Camera Flow
@@ -204,9 +223,16 @@ struct ContentView: View {
             }
         }
         .onAppear {
+            // Check camera permission and start session
             viewModel.checkCameraAuthorization()
+            positionSubject
+                .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
+                .sink { newValue in
+                    debouncedPosition = newValue
+                }
+                .store(in: &cancellables)
         }
-        // Check Camera permission
+        // Camera permission alert
         .alert("Camera Access Needed",
                isPresented: $viewModel.showCameraSettingsAlert)
         {
@@ -219,7 +245,7 @@ struct ContentView: View {
         } message: {
             Text("Please allow camera access in Settings to take photos and videos.")
         }
-        // Check Photos permission
+        // Photos permission alert
         .alert("Photos Permission Needed",
                isPresented: $viewModel.showSettingsAlert)
         {
@@ -230,7 +256,6 @@ struct ContentView: View {
         } message: {
             Text("Please allow Photos access so you can save your photos and videos.")
         }
-        .onAppear(perform: viewModel.setup)
         .animation(.easeInOut(duration: Constants.Animation.quick),
                    value: viewModel.showSaveToast)
     }

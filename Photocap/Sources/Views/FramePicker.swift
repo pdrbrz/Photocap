@@ -12,9 +12,14 @@ struct FramePicker: View {
 
     let asset: AVAsset
     let frameTimePosition: Double
-    var onFrameChange: (UIImage) -> Void //
+    var onFrameChange: (UIImage) -> Void
 
+    // MARK: Private Properties
+
+    @State private var generator: AVAssetImageGenerator?
     @State private var frameImage: UIImage?
+
+    // MARK: UI
 
     var body: some View {
         Group {
@@ -22,6 +27,7 @@ struct FramePicker: View {
                 Image(uiImage: img)
                     .resizable()
                     .scaledToFill()
+                    .zoomable()
             } else {
                 ProgressView()
             }
@@ -29,36 +35,34 @@ struct FramePicker: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .clipped()
         .background(Color.black)
-        .zoomable()
+        // whenever `position` changes, ask the one generator for a new frame
         .onChange(of: frameTimePosition) { newPos in
-            generatePreciseFrame(at: newPos)
+            generateFrame(at: newPos)
         }
+        // create & configure the generator once
         .onAppear {
-            generatePreciseFrame(at: frameTimePosition)
+            let gen = AVAssetImageGenerator(asset: asset)
+            gen.appliesPreferredTrackTransform = true
+            gen.requestedTimeToleranceBefore = .zero
+            gen.requestedTimeToleranceAfter = .zero
+            generator = gen
+            generateFrame(at: frameTimePosition)
         }
     }
 
     // MARK: Private Methods
 
-    private func generatePreciseFrame(at seconds: Double) {
-        // Planned Improvements:
-        // Use a single generator instace instead of creating one for each frame,
-        // the current implementation is expensive.
-        let generator = AVAssetImageGenerator(asset: asset)
-        generator.appliesPreferredTrackTransform = true
-        generator.requestedTimeToleranceBefore = .zero
-        generator.requestedTimeToleranceAfter = .zero
+    private func generateFrame(at seconds: Double) {
+        guard let generator else { return }
 
         let time = CMTime(
             seconds: seconds,
             preferredTimescale: asset.duration.timescale
         )
+
         DispatchQueue.global(qos: .userInitiated).async {
             do {
-                let cg = try generator.copyCGImage(
-                    at: time,
-                    actualTime: nil
-                )
+                let cg = try generator.copyCGImage(at: time, actualTime: nil)
                 let ui = UIImage(cgImage: cg)
                 DispatchQueue.main.async {
                     frameImage = ui
